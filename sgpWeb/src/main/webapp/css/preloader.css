@@ -1,0 +1,44 @@
+@charset "utf-8";
+body {
+	overflow: hidden;
+}
+
+/* Preloader */
+#preloader {
+	position: fixed;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	background-color:#BDBDBD; /* change if the mask should have another color then white */
+	z-index:99; /* makes sure it stays on top */
+/* 	opacity: 0.0 - 1.0;
+	background-color: transparent; */
+	filter:alpha(opacity=80);  /* works in IE 7 */
+    opacity: 0.8;  /* works in Firefox */
+}
+
+#status {
+	width:100px;
+	height:100px;
+	position:absolute;
+	left:50%; /* centers the loading animation horizontally one the screen */
+	top:50%; /* centers the loading animation vertically one the screen */
+	background-image:url(../images/cargando.gif);/* path to your loading animation */
+	background-repeat:no-repeat;
+	background-position:center;
+	margin:-50px 0 0 -50px; /* is width and height divided by two */
+
+}
+
+.imagenCarga {
+	width:100px;
+	height:100px;
+	position:absolute;
+	left:50%; /* centers the loading animation horizontally one the screen */
+	top:50%; /* centers the loading animation vertically one the screen */
+	background-image:url(../images/cargando.gif);/* path to your loading animation */
+	background-repeat:no-repeat;
+	background-position:center;
+	margin:-50px 0 0 -50px; /* is width and height divided by two */
+}

@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="../templates/template.xhtml">
+	<ui:define name="cuerpo">
+		<h:form id="dataForm" prependId="false">
+			<p:panel>
+				<h:panelGrid style="width: 100%" columns="2">
+					<p:spacer width="700" height="15"></p:spacer>
+					<p:spacer height="15"></p:spacer>
+					<h:panelGroup>
+						<br />
+						<h1>
+							<p:outputLabel styleClass="text_color_sos"
+								value="#{messages.label_welcome}" />
+						</h1>
+						<br />
+						<p:outputLabel styleClass="text_color_sos"
+							value="#{messages.label_to}" />
+						<ul class="text_color_sos">
+							<li><p:outputLabel value="#{messages.label_items_1}" /></li>
+							<li><p:outputLabel value="#{messages.label_items_2}" /></li>
+							<li><p:outputLabel value="#{messages.label_items_3}" /></li>
+							<li><p:outputLabel value="#{messages.label_items_4}" /></li>
+							<li><p:outputLabel value="#{messages.label_items_5}" /></li>
+							<li><p:outputLabel value="#{messages.label_items_6}" /></li>
+						</ul>
+						<br />
+						<br />
+						<p:outputLabel styleClass="text_color_sos"
+							value="#{messages.label_example}" />
+						<ul class="text_color_sos">
+							<li><p:outputLabel value="#{messages.label_items_7}" /></li>
+							<li><p:outputLabel value="#{messages.label_items_8}" /></li>
+							<li><p:outputLabel value="#{messages.label_items_9}" /></li>
+							<li><p:outputLabel value="#{messages.label_items_10}" /></li>
+						</ul>
+					</h:panelGroup>
+					<h:panelGroup>
+						<p:graphicImage value="/images/indexImage.png" width="80%" />
+						<br />
+						<br />
+						<br />
+						<br />
+						<br />
+					</h:panelGroup>
+				</h:panelGrid>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
+

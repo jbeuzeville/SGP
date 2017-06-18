@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<f:view locale="#{localeBean.locale}" contentType="text/html">
+	<h:head>
+		<title>#{messages.index_titulo}</title>
+		<link rel="stylesheet" type="text/css"
+			href="#{request.contextPath}/css/styles.css" />
+		<link href="#{request.contextPath}/images/hitss.png"
+			rel="Shortcut Icon" />
+		<script type="text/javascript">
+	    function load(){
+	    	document.getElementById("txtUsuario_input").focus();
+	    	document.getElementById("txtResolucion").value = screen.width;
+	    }
+	</script>
+
+		<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		</f:facet>
+	</h:head>
+
+	<h:body style="background-color: #F2F2F2;" onload="load();">
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false"
+			styleClass="statusModal">
+			<p:graphicImage value="/images/cargando.gif" width="32px"
+				height="32px" />
+		</p:dialog>
+
+
+		<h:outputLabel value="#{loginController.limpiar}" />
+		<h:outputLabel value="#{loginController.init}" />
+		<p:fieldset style="width: 80%; margin: auto; 
+			background: url('#{request.contextPath}/images/index.jpg') center left no-repeat;
+				background-size: 160% 110%;"><!-- background-color: rgb(13, 19, 29) -->
+			<h:panelGrid columns="1" cellpadding="5" width="100%"
+				style="margin: 0 auto; text-align: right; font-weight: bold;">
+				<p:row>
+					<h:outputLabel styleClass="login-font" value="| "></h:outputLabel>
+					<p:commandLink
+						style="color: #0189B4; font-size: 10px; font-family: Arial, Helvetica, sans-serif;"
+						value="Acerca de HITSS"
+						onclick="window.open('http://www.globalhitss.com/conocenos/')"></p:commandLink>
+					<h:outputLabel styleClass="login-font" value="| "></h:outputLabel>
+					<p:commandLink
+						style="color: #0189B4; font-size: 10px; font-family: Arial, Helvetica, sans-serif;"
+						value="Contacto HITSS"
+						onclick="window.open('http://www.globalhitss.com/contacto/')"></p:commandLink>
+					<h:outputLabel styleClass="login-font" value="| "></h:outputLabel>
+				</p:row>
+			</h:panelGrid>
+			<p:spacer height="5"></p:spacer>
+			<h:form id="frmIndex" prependId="false">
+				<h:panelGrid columns="3" styleClass="center">
+					<h:outputLabel value=""></h:outputLabel>
+					<p:spacer height="50" width="650"></p:spacer>
+					<h:outputLabel value=""></h:outputLabel>
+					<p:spacer width="50" height="20"></p:spacer>
+					<h:panelGroup>
+						<h:panelGrid columns="1">
+							<h:outputLabel value="SISTEMA DE GESTIÓN DE PERSONAL"
+								styleClass="textLogin"></h:outputLabel>
+							<p:spacer height="15"></p:spacer>
+							<p:graphicImage value="/images/logoHitss.png"/>
+						</h:panelGrid>
+					</h:panelGroup>
+					<p:graphicImage value="/images/indexImage.png" width="80%"/>
+					<p:spacer width="50" height="20"></p:spacer>
+				</h:panelGrid>
+				<h:panelGrid columns="2" styleClass="bold"
+					style="margin: auto; text-align: center;" cellspacing="6">
+					<p:inputNumber id="txtUsuario" value="#{loginController.usuario}"
+						required="true" placeholder="USUARIO"
+						styleClass="inputNumberSize170" decimalPlaces="0" 
+						requiredMessage="Por favor, ingrese USUARIO."
+						decimalSeparator="" thousandSeparator="" maxValue="10000000000" />
+					<h:outputLabel value=""></h:outputLabel>
+					<p:password id="txtPass" value="#{loginController.clave}"
+						required="true" placeholder="CONTRASEÑA"
+						requiredMessage="Por favor, ingrese CONTRASEÑA"
+						style="width: 170px;" maxlength="30" />
+					<h:outputLabel value=""></h:outputLabel>
+
+					<h:panelGroup>
+						<p:commandButton value="#{messages.index_iniciar}"
+							action="#{loginController.iniciarSesion}" ajax="false"
+							update="messages" title="Ingresar a SGP" />
+						<p:spacer width="15px"></p:spacer>
+						<p:commandButton value="#{messages.index_marcar}"
+							title="Registrar Marcación" action="#{loginController.marcar}"
+							ajax="false" update="messages" />
+					</h:panelGroup>
+				</h:panelGrid>
+				<p:inputText value="#{loginController.resolucion}"
+					id="txtResolucion" style="display: none"></p:inputText>
+
+				<h:panelGrid style="height: 60px; margin: auto; text-align: center;">
+					<p:messages id="messages" showDetail="false" />
+				</h:panelGrid>
+				<p:spacer height="50"></p:spacer>
+				<pe:tooltip global="true" showDelay="0" myPosition="left top"
+					atPosition="right center" adjustX="0" adjustY="12"></pe:tooltip>
+			</h:form>
+			<p:spacer height="5"></p:spacer>
+			<h:panelGrid columns="1" cellpadding="5" width="100%"
+				style="margin: 0 auto; background-color: #B5C0C6; text-align: justify;">
+				<h:outputLabel
+					style="color: #464646; font-size: 8px; font-family: Verdana, Arial, Helvetica, sans-serif; font-weight: bold;"
+					value="IMPORTANTE: TEXTO"></h:outputLabel>
+			</h:panelGrid>
+			<h:panelGrid columns="1" cellpadding="5" width="100%"
+				style="margin: 0 auto; background-color: #CFD2D4; text-align: center;" >
+				<p:row>
+					<h:outputLabel styleClass="login-font" value="| "></h:outputLabel>
+					<p:commandLink
+						style="color: #0189B4; font-size: 8px; font-family: Arial, Helvetica, sans-serif; font-weight: bold;"
+						value="INICIO"
+						onclick="window.open('http://www.globalhitss.com/')"></p:commandLink>
+					<h:outputLabel styleClass="login-font" value="| "></h:outputLabel>
+					<p:commandLink
+						style="color: #0189B4; font-size: 8px; font-family: Arial, Helvetica, sans-serif; font-weight: bold;"
+						value="ACERCA DE"
+						onclick="window.open('http://www.globalhitss.com/conocenos/')"></p:commandLink>
+					<h:outputLabel styleClass="login-font" value="| "></h:outputLabel>
+					<p:commandLink
+						style="color: #0189B4; font-size: 8px; font-family: Arial, Helvetica, sans-serif; font-weight: bold;"
+						value="CONTACTO"
+						onclick="window.open('http://www.globalhitss.com/contacto/')"></p:commandLink>
+					<h:outputLabel styleClass="login-font" value="| "></h:outputLabel>
+					<p:commandLink
+						style="color: #0189B4; font-size: 8px; font-family: Arial, Helvetica, sans-serif; font-weight: bold;"
+						value="SERVICIOS"
+						onclick="window.open('http://www.globalhitss.com/servicios/')"></p:commandLink>
+					<h:outputLabel styleClass="login-font" value="| "></h:outputLabel>
+					<p:commandLink
+						style="color: #0189B4; font-size: 8px; font-family: Arial, Helvetica, sans-serif; font-weight: bold;"
+						value="CARRERAS"
+						onclick="window.open('http://www.globalhitss.com/carreras/')"></p:commandLink>
+					<h:outputLabel styleClass="login-font" value="| "></h:outputLabel>
+					<h:outputLabel
+						style="color: #464646; font-size: 8px; font-family: Arial, Helvetica, sans-serif; font-weight: bold;"
+						value="ALL RIGHTS RESERVED. HITSS"></h:outputLabel>
+				</p:row>
+			</h:panelGrid>
+		</p:fieldset>
+
+	</h:body>
+</f:view>
+</html>

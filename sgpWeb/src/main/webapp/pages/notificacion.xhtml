@@ -1,0 +1,27 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+	<h:form id="notificacion" prependId="false">
+		<p:panel id="pnlNotificacion" header="NOTIFICACIONES">
+			<c:forEach items="#{loginController.listNotificacion}" var="nota">
+				<p:spacer height="2"></p:spacer>
+				<p:panel header="#{nota.informacion}" styleClass="notificacion">
+					<h:outputLabel value="#{nota.notificacion}" />
+					<h:panelGrid columns="2" styleClass="center" width="100%">
+						<div class="#{nota.nivel}" title="Nivel: #{nota.nivel}"></div>
+						<p:commandButton actionListener="#{loginController.eliminarNotificacion(nota)}"
+							icon="ui-icon-check" title="Hecho" global="false"
+							update="pnlNotificacion"></p:commandButton>
+					</h:panelGrid>
+				</p:panel>
+			</c:forEach>
+		</p:panel>
+		<pe:tooltip global="true" showDelay="0" myPosition="left top"
+			atPosition="right center" adjustX="0" adjustY="12"></pe:tooltip>
+	</h:form>
+</ui:composition>

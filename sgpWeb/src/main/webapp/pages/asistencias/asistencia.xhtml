@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+<ui:composition template="../../templates/template.xhtml">
+	<ui:define name="cuerpo">
+		<h:form id="dataForm" prependId="false">
+			<p:growl id="growl" showDetail="false" sticky="false" />
+			<h:outputText value="#{asistenciaController.iniMain}" />
+			<p:panel id="data" toggleable="false" toggleSpeed="250">
+				<p:panel header="MI ASISTENCIA" styleClass="bold">
+					<h:panelGrid columns="4" styleClass="text_color_azul_small"
+						cellpadding="5" cellspacing="4">
+						<p:outputLabel value="Clave:" />
+						<p:password id="txtClave" value="#{asistenciaController.clave}"></p:password>
+						<p:commandButton value="Marcar" ajax="false" update="messages"
+							action="#{asistenciaController.marcar}"
+							style="text-align:center;" />
+						<p:messages id="messages" showDetail="false" />
+					</h:panelGrid>
+					<h:panelGrid columns="7" styleClass="text_color_azul_small"
+						cellpadding="5" cellspacing="4">
+						<p:outputLabel value="Fecha Inicio" />
+						<p:calendar id="desde"
+							value="#{asistenciaController.asistencia.fechaInicio}" pages="2"
+							pattern="dd/MM/yyyy">
+							<p:ajax event="dateSelect" update="hasta" global="false"></p:ajax>
+						</p:calendar>
+						<p:watermark for="desde" value="Fecha Inicio" />
+						<p:outputLabel value="Fecha Fin" />
+						<p:calendar id="hasta"
+							value="#{asistenciaController.asistencia.fechaFin}" pages="2"
+							pattern="dd/MM/yyyy"
+							mindate="#{asistenciaController.asistencia.fechaInicio}" />
+						<p:watermark for="hasta" value="Fecha Fin" />
+						<p:commandButton value="Buscar" icon="ui-icon-search"
+							action="#{asistenciaController.buscarAsistencias}"
+							update="idTableAsistencia" />
+					</h:panelGrid>
+				</p:panel>
+				<br />
+				<p:dataTable id="idTableAsistencia" var="c"
+					value="#{asistenciaController.listAsistencias}" rows="10"
+					paginator="true" paginatorPosition="bottom"
+					rowsPerPageTemplate="5,10,15,20,25,50,100,200,300,400,500,600,700,800,900,1000"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
+				    {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					emptyMessage="#{messages.general_no_registros}"
+					rowIndexVar="index">
+
+					<p:column width="25%" sortBy="#{c.fecha}" styleClass="center">
+						<f:facet name="header">
+							<h:outputText value="FECHA" />
+						</f:facet>
+						<h:outputText value="#{c.fecha}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+					<p:column width="25%" sortBy="#{c.nombreDia}" styleClass="center">
+						<f:facet name="header">
+							<h:outputText value="DÍA" />
+						</f:facet>
+						<h:outputText value="#{c.nombreDia}" />
+					</p:column>
+					<p:column width="25%" styleClass="center">
+						<f:facet name="header">
+							<h:outputText value="HORA DE INGRESO" />
+						</f:facet>
+						<h:outputText value="#{c.horaIngreso}" />
+					</p:column>
+					<p:column width="25%" styleClass="center">
+						<f:facet name="header">
+							<h:outputText value="HORA DE SALIDA" />
+						</f:facet>
+						<h:outputText value="#{c.horaSalida}" />
+					</p:column>
+					<f:facet name="footer">
+						<h:outputText
+							value="En total se encontraron #{fn:length(asistenciaController.listAsistencias)}  registros" />
+					</f:facet>
+				</p:dataTable>
+			</p:panel>
+			
+			<pe:tooltip global="true" showDelay="0" myPosition="left top"
+					atPosition="right center" adjustX="0" adjustY="12"></pe:tooltip>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

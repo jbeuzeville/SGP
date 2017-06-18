@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<f:view locale="#{localeBean.locale}" contentType="text/html">
+	<h:head>
+		<title><h:outputText value="#{messages.general_tituloPagina}" /></title>
+		<link href="#{request.contextPath}/images/hitss.png"
+			rel="Shortcut Icon" />
+		<link rel="stylesheet" type="text/css"
+			href="#{request.contextPath}/css/styles.css" />
+		<script type="text/javascript"
+			src="#{request.contextPath}/js/funciones.js" />
+		<link rel="stylesheet" href="#{request.contextPath}/css/preloader.css"
+			type="text/css" />
+
+		<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		</f:facet>
+		<script type="text/javascript">
+	    function load(){
+	    	document.getElementById("txtResolucion1").value = screen.width;
+	    }
+	</script>
+	</h:head>
+	<h:body onload="load();">
+		<!-- Preloader -->
+		<div id="preloader">
+			<div id="status">&nbsp;</div>
+		</div>
+
+		<!-- Preloader -->
+		<script type="text/javascript">
+		$(window).load(function() { // makes sure the whole site is loaded
+			$('#status').fadeIn();
+			$('#preloader').fadeIn('slow');
+			$('body').delay(2000).css({'overflow':'hidden'});
+						
+			$('#status').fadeOut(); // will first fade out the loading animation
+			$('#preloader').delay(350).fadeOut('slow'); // will fade out the white DIV that covers the website.
+			$('body').delay(350).css({'overflow':'visible'});
+
+			//$('#dlgStatus_modal').addClass('dlgFondoOscuro');
+		});
+	</script>
+
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+		<p:dialog id="dlgStatus" widgetVar="statusDialog" modal="true"
+			draggable="false" closable="false" resizable="false"
+			showHeader="false" styleClass="statusModal">
+			<p:graphicImage value="../../images/cargando.gif" />
+		</p:dialog>
+
+		<!-- ================================================== -->
+		<!-- Para que muestre una mensaje cuando termina la sesion -->
+		<!-- #{(session.maxInactiveInterval - 2) * 1000}  -->
+		<p:idleMonitor timeout="3600000" onidle="PF('idleDialog').show()" />
+		<p:dialog header="#{messages.caduca_cabecera}" resizable="false"
+			closable="false" widgetVar="idleDialog" modal="true" width="400px"
+			height="80px">
+			<p:panelGrid style="text-align: justify;">
+				<p:spacer width="0" height="10" />
+				<h:outputText value="#{messages.caduca_mensaje}"
+					style="font-size: 11px; 
+		    	font-family: Verdana, Arial, Helvetica, sans-serif;" />
+			</p:panelGrid>
+			<p:spacer width="0" height="10" />
+			<div align="center">
+				<p:commandButton id="confirmBackToLogin" type="button"
+					value="#{messages.caduca_boton}"
+					onclick="window.location='#{facesContext.externalContext.requestContextPath}'"
+					icon="ui-icon-alert" />
+				<p:spacer width="0" height="10" />
+			</div>
+		</p:dialog>
+		<!--<table width="100%" border="1">
+			<tr>
+				<td colspan="2"><ui:insert name="header">
+						<ui:include src="header.xhtml" />
+					</ui:insert></td>
+			</tr>
+			<tr>
+				<td valign="top"><ui:insert name="header">
+						<ui:include src="menu.xhtml" />
+					</ui:insert></td>
+				<td valign="top"><ui:insert name="cuerpo">
+					</ui:insert></td>
+			</tr>
+		</table>-->
+		
+		<p:layout >
+            <p:layoutUnit position="north">
+				<ui:include src="header.xhtml"/>
+            </p:layoutUnit>
+
+            <!--<p:layoutUnit position="south" size="100" header="Bottom" resizable="true" closable="true" collapsible="true">
+                <h:outputText value="South unit content." />
+            </p:layoutUnit>-->
+
+            <p:layoutUnit position="west">
+                <ui:include src="menu.xhtml" />
+                <p:spacer height="5px"></p:spacer>
+				<ui:include src="/pages/notificacion.xhtml"></ui:include>
+            </p:layoutUnit>
+
+            <!--<p:layoutUnit position="east" size="200" header="Right" resizable="true" closable="true" collapsible="true" effect="drop">
+                <h:outputText value="Right unit content." />
+            </p:layoutUnit>-->
+
+            <p:layoutUnit position="center">
+                <ui:insert name="cuerpo"></ui:insert>
+            </p:layoutUnit>
+        </p:layout>
+	</h:body>
+</f:view>
+</html>

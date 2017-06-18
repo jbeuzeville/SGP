@@ -1,0 +1,491 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+<ui:composition template="../../templates/template.xhtml">
+	<ui:define name="cuerpo">
+		<h:form id="dataForm" prependId="false" enctype="multipart/form-data">
+			<p:growl id="growl" showDetail="false" sticky="false" />
+			<p:outputLabel value="#{gestionarActividadController.iniMain}" />
+			<p:panel id="data" toggleable="false" toggleSpeed="250">
+				<p:panel id="pnlRegistro"
+					header="#{gestionarActividadController.actividad.idRegistroActividad eq null ? 'REGISTRAR' : 'EDITAR'} ACTIVIDAD"
+					styleClass="bold">
+					<p:panelGrid
+						style="width: 90%; border-spacing: 4px !important; border-collapse: separate !important;">
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Fecha" />
+							</p:column>
+							<p:column>
+								<p:calendar pages="2" pattern="dd/MM/yyyy"
+									value="#{gestionarActividadController.actividad.fecha}">
+									<p:ajax listener="#{gestionarActividadController.obtenerSemanaDelMes}"
+										update="lblSemana" event="dateSelect" global="false"></p:ajax>
+								</p:calendar>
+							</p:column>
+							<p:column>
+								<p:outputLabel value="Semana" />
+							</p:column>
+							<p:column>
+								<p:outputLabel id="lblSemana"
+									value="#{gestionarActividadController.actividad.semanaMes}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Proyecto" />
+							</p:column>
+							<p:column>
+								<p:inputText id="txtProyecto" style="width: 260px;"
+									readonly="true"
+									value="#{gestionarActividadController.actividad.proyecto.nombreProyecto}">
+								</p:inputText>
+								<p:spacer width="5px"></p:spacer>
+								<p:commandButton icon="ui-icon-search" global="false"
+									onclick="PF('widgetProyecto').show();"
+									title="Seleccionar Proyecto"></p:commandButton>
+							</p:column>
+							<p:column>
+								<p:outputLabel value="Codigo SD" />
+							</p:column>
+							<p:column>
+								<p:inputText id="txtCodigoFalla" maxlength="100"
+									styleClass="toUpper"
+									value="#{gestionarActividadController.actividad.codigoSDfalla}">
+									<p:ajax event="blur" global="false"
+										listener="#{gestionarActividadController.blurEditaCodigoSD}"
+										update="txtProyecto, txtIdea, @this"></p:ajax>
+								</p:inputText>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Idea" />
+							</p:column>
+							<p:column>
+								<p:inputText id="txtIdea" style="width: 260px;" readonly="true"
+									value="#{gestionarActividadController.actividad.idea.descIdea}">
+								</p:inputText>
+								<p:spacer width="5px"></p:spacer>
+								<p:commandButton icon="ui-icon-search" global="false"
+									onclick="PF('widgetIdea').show();" title="Seleccionar Idea"></p:commandButton>
+							</p:column>
+							<p:column>
+								<p:outputLabel value="Horas" />
+							</p:column>
+							<p:column>
+								<p:inputNumber maxlength="2" decimalPlaces="0"
+									autocomplete="true"
+									value="#{gestionarActividadController.actividad.horasEjecutadas}"
+									decimalSeparator="" thousandSeparator="" maxValue="24"></p:inputNumber>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column rowspan="3">
+								<p:outputLabel value="Actividad" />
+							</p:column>
+							<p:column rowspan="3">
+								<p:inputTextarea rows="6" maxlength="2500"
+									value="#{gestionarActividadController.actividad.actividad}"
+									style="width: 289px;" counter="count"
+									counterTemplate="{0} caracteres restantes."></p:inputTextarea>
+								<br />
+								<p:outputLabel id="count" />
+							</p:column>
+							<p:column>
+								<p:outputLabel value="Tipo de Actividad" />
+							</p:column>
+							<p:column>
+								<p:selectOneMenu style="width: 250px;"
+									value="#{gestionarActividadController.actividad.tipoActividad.idTipoActividad}">
+									<f:selectItem itemLabel="-- Seleccionar --" itemValue="#{null}" />
+									<f:selectItems value="#{gestionarActividadController.listTipoActividad}"
+										var="a" itemLabel="#{a.descTipoActividad}"
+										itemValue="#{a.idTipoActividad}" />
+								</p:selectOneMenu>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Tipo Horario" />
+							</p:column>
+							<p:column>
+								<p:selectOneMenu style="width: 250px;"
+									value="#{gestionarActividadController.actividad.tipoHorario.idTipoHorario}">
+									<f:selectItem itemLabel="-- Seleccionar --" itemValue="#{null}" />
+									<f:selectItems value="#{gestionarActividadController.listTipoHorario}"
+										var="a" itemLabel="#{a.descTipoHorario}"
+										itemValue="#{a.idTipoHorario}" />
+									<p:ajax event="change" global="false" update="data"
+										listener="#{gestionarActividadController.seleccionaHorario}"
+										process="@form"></p:ajax>
+								</p:selectOneMenu>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Analista" />
+							</p:column>
+							<p:column>
+								<p:selectOneMenu style="width: 250px;"
+									value="#{gestionarActividadController.actividad.usuAnalistaEjec.idUsuario}">
+									<f:selectItem itemLabel="-- Seleccionar --" itemValue="#{null}" />
+									<f:selectItems value="#{gestionarActividadController.listUsuario}"
+										var="a" itemLabel="#{a.nombreCompleto}"
+										itemValue="#{a.idUsuario}" />
+								</p:selectOneMenu>
+							</p:column>
+						</p:row>
+						<p:row rendered="#{gestionarActividadController.actividad.flgDocumentos}">
+							<p:column>
+								<p:outputLabel value="Documentos" />
+							</p:column>
+							<p:column colspan="3" style="height: 90px; vertical-align: top;">
+								<p:fileUpload id="adjuntarDoc" mode="advanced" fileLimit="1"
+									fileUploadListener="#{gestionarActividadController.handleFileUpload}"
+									sizeLimit="4194304" dragDropSupport="true" style="width: 96%;"
+									allowTypes="/(\.|\/)(jpe?g|png|txt|pdf|doc|docx|ppt|xls|xlsx)$/"
+									cancelLabel="Cancelar" uploadLabel="Adjuntar" label="Examinar"
+									update="@this, idTableDoc, growl" />
+							</p:column>
+						</p:row>
+						<p:row rendered="#{gestionarActividadController.actividad.flgDocumentos}">
+							<p:column>
+
+							</p:column>
+							<p:column colspan="3" style="vertical-align: top;">
+								<p:dataTable id="idTableDoc" var="x" rows="5"
+									value="#{gestionarActividadController.actividad.listDocumento}"
+									paginator="true" paginatorPosition="bottom"
+									rowsPerPageTemplate="5,10"
+									paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
+								    {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+									emptyMessage="#{messages.general_no_registros}"
+									scrollable="true" scrollHeight="90" scrollWidth="88%">
+									<p:column width="100" value="#{x.codigoIdea}">
+										<f:facet name="header">
+											<h:outputText value="DOCUMENTO" />
+										</f:facet>
+										<h:outputText value="#{x.nombreDocumento}" />
+									</p:column>
+									<p:column width="70" styleClass="center">
+										<f:facet name="header">
+											<h:outputText value="OPCION" />
+										</f:facet>
+										<p:commandButton icon="ui-icon-arrowthick-1-s"
+											title="Descargar" process="@this" ajax="false"
+											actionListener="#{gestionarActividadController.descargarDocumento(x)}">
+											<p:fileDownload value="#{gestionarActividadController.file}"></p:fileDownload>
+										</p:commandButton>
+										<p:spacer width="15px"></p:spacer>
+										<p:commandButton icon="ui-icon-trash" title="Eliminar"
+											action="#{gestionarActividadController.eliminarDocumento(x)}"
+											update=":dataForm:idTableDoc, growl" global="false"></p:commandButton>
+									</p:column>
+									<f:facet name="footer">
+										<h:outputText
+											value="En total se encontraron #{fn:length(gestionarActividadController.actividad.listDocumento)}  registros" />
+									</f:facet>
+								</p:dataTable>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column colspan="4" styleClass="center">
+								<p:commandButton icon="ui-icon-disk" value="Grabar"
+									action="#{gestionarActividadController.grabarActividad}"
+									title="Grabar actividad" update="data, growl" global="false"></p:commandButton>
+								<p:spacer width="25px" height="15px"></p:spacer>
+								<p:commandButton
+									action="#{gestionarActividadController.cancelarOperacion}"
+									icon="ui-icon-cancel" value="Cancelar"
+									title="Cancelar operación" update="data, growl" global="false"></p:commandButton>
+							</p:column>
+						</p:row>
+						<p:row
+							rendered="#{(gestionarActividadController.actividad.idRegistroActividad ne null) and
+							!(empty gestionarActividadController.actividad.listDocumento)}">
+							<p:column colspan="4" styleClass="center">
+								<h:outputText
+									value="Los cambios en documentos sólo se guardaran al Grabar."
+									styleClass="textoAdvertencia" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:panel>
+				<br />
+				<p:panel id="pnlBuscar" header="LISTA DE ACTIVIDADES"
+					styleClass="bold">
+					<h:panelGrid columns="5" styleClass="text_color_azul_small"
+						cellpadding="5" cellspacing="4" width="90%">
+						<p:outputLabel value="Usuario" />
+						<p:selectOneMenu style="width: 230px;"
+							value="#{gestionarActividadController.filtroActividad.idRecurso}">
+							<f:selectItem itemLabel="-- Seleccionar --" itemValue="#{null}" />
+							<f:selectItems value="#{gestionarActividadController.listUsuario}"
+								var="a" itemLabel="#{a.nombreCompleto}"
+								itemValue="#{a.idUsuario}" />
+						</p:selectOneMenu>
+						<p:outputLabel value="Proyecto Hitss" />
+						<p:selectOneMenu style="width: 250px;"
+							value="#{gestionarActividadController.filtroActividad.idProyectoHitss}">
+							<f:selectItem itemLabel="-- Seleccionar --" itemValue="#{null}" />
+							<f:selectItems value="#{gestionarActividadController.listProyectoHitss}"
+								var="a" itemLabel="#{a.nombreProyecto}"
+								itemValue="#{a.idProyecto}" />
+						</p:selectOneMenu>
+						<p:outputLabel value="" />
+						<p:outputLabel value="Fecha Inicio" />
+						<p:calendar pages="2" pattern="dd/MM/yyyy"
+							value="#{gestionarActividadController.filtroActividad.fechaInicio}"
+							placeholder="Ingrese fecha">
+							<p:ajax event="dateSelect" update="hasta" global="false"></p:ajax>
+						</p:calendar>
+						<p:outputLabel value="Fecha Fin" />
+						<p:calendar id="hasta" pages="2" pattern="dd/MM/yyyy"
+							value="#{gestionarActividadController.filtroActividad.fechaFin}"
+							placeholder="Ingrese fecha"
+							mindate="#{gestionarActividadController.filtroActividad.fechaInicio}" />
+						<p:commandButton value="Buscar" icon="ui-icon-search"
+							action="#{gestionarActividadController.listarActividad}"
+							update="idTableAsistencia, growl" global="false" />
+						<p:commandButton value="Exportar" ajax="false">
+							<p:dataExporter type="xlsx" target="idTableAsistencia"
+								fileName="Actividades" />
+						</p:commandButton>
+					</h:panelGrid>
+				</p:panel>
+				<br />
+				<p:dataTable id="idTableAsistencia" var="c"
+					value="#{gestionarActividadController.listActividad}" rows="10"
+					paginator="true" paginatorPosition="bottom"
+					rowsPerPageTemplate="5,10,15,20,25,50,100,200,300,400,500,600,700,800,900,1000"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
+				    {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					scrollable="true" emptyMessage="#{messages.general_no_registros}"
+					rowIndexVar="index" scrollWidth="98%">
+					<p:column width="120" sortBy="#{c.semanaMes}" styleClass="center">
+						<f:facet name="header">
+							<h:outputText value="SEMANA DEL MES" />
+						</f:facet>
+						<h:outputText value="#{c.semanaMes}" />
+					</p:column>
+					<p:column width="100" sortBy="#{c.fecha}" styleClass="center">
+						<f:facet name="header">
+							<h:outputText value="FECHA" />
+						</f:facet>
+						<h:outputText value="#{c.fecha}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+					<p:column width="100" sortBy="#{c.proyecto.codigoProyecto}">
+						<f:facet name="header">
+							<h:outputText value="COD PROY" />
+						</f:facet>
+						<h:outputText value="#{c.proyecto.codigoProyecto}" />
+					</p:column>
+					<p:column width="300" sortBy="#{c.proyecto.nombreProyecto}">
+						<f:facet name="header">
+							<h:outputText value="NOMBRE DEL PROYECTO" />
+						</f:facet>
+						<h:outputText value="#{c.proyecto.nombreProyecto}" />
+					</p:column>
+					<p:column width="100" sortBy="#{c.idea.codigoIdea}">
+						<f:facet name="header">
+							<h:outputText value="CODIGO IDEA" />
+						</f:facet>
+						<h:outputText value="#{c.idea.codigoIdea}" />
+					</p:column>
+					<p:column width="100" sortBy="#{c.codigoSDfalla}">
+						<f:facet name="header">
+							<h:outputText value="CODIGO SD" />
+						</f:facet>
+						<h:outputText value="#{c.codigoSDfalla}" />
+					</p:column>
+					<p:column width="150" sortBy="#{c.tipoActividad.descTipoActividad}">
+						<f:facet name="header">
+							<h:outputText value="TIPO ACTIVIDAD" />
+						</f:facet>
+						<h:outputText value="#{c.tipoActividad.descTipoActividad}" />
+					</p:column>
+					<p:column width="300" sortBy="#{c.actividad}">
+						<f:facet name="header">
+							<h:outputText value="ACTIVIDAD" />
+						</f:facet>
+						<h:outputText value="#{c.actividad}" />
+					</p:column>
+					<p:column width="130" sortBy="#{c.horasEjecutadas}">
+						<f:facet name="header">
+							<h:outputText value="HORAS EJECUTADAS" />
+						</f:facet>
+						<h:outputText value="#{c.horasEjecutadas}" />
+					</p:column>
+					<p:column width="150" sortBy="#{c.tipoHorario.descTipoHorario}">
+						<f:facet name="header">
+							<h:outputText value="TIPO HORARIO" />
+						</f:facet>
+						<h:outputText value="#{c.tipoHorario.descTipoHorario}" />
+					</p:column>
+					<p:column width="250" sortBy="#{c.recurso.nombreCompleto}">
+						<f:facet name="header">
+							<h:outputText value="NOMBRE DEL RECURSO" />
+						</f:facet>
+						<h:outputText value="#{c.recurso.nombreCompleto}" />
+					</p:column>
+					<p:column width="70" styleClass="center" exportable="false">
+						<f:facet name="header">
+							<h:outputText value="OPCION" />
+						</f:facet>
+						<p:commandButton icon="ui-icon-pencil" global="false"
+							action="#{gestionarActividadController.editarActividad(c)}" title="Editar"
+							update="pnlRegistro, idTableDoc"></p:commandButton>
+						<p:spacer width="10px"></p:spacer>
+						<p:commandButton icon="ui-icon-trash" title="Eliminar"
+							action="#{gestionarActividadController.eliminarActividad(c)}"
+							update="@this, growl"></p:commandButton>
+					</p:column>
+					<f:facet name="footer">
+						<h:outputText
+							value="En total se encontraron #{fn:length(gestionarActividadController.listActividad)}  registros" />
+					</f:facet>
+				</p:dataTable>
+			</p:panel>
+
+			<pe:tooltip global="true" showDelay="0" myPosition="left top"
+				atPosition="right center" adjustX="0" adjustY="12"></pe:tooltip>
+		</h:form>
+
+		<!-- Dialog Seleccionar Proyecto -->
+		<p:dialog id="dialogProyecto" header="Seleccionar Proyecto"
+			appendTo="@(body)" widgetVar="widgetProyecto" modal="true"
+			width="60%" resizable="false" height="480" position="top">
+			<p:outputPanel>
+				<h:form id="formProyecto">
+					<p:panel id="panelProyecto">
+						<h:panelGrid columns="5" cellpadding="3">
+							<p:outputLabel value="Codigo" />
+							<p:inputText
+								value="#{gestionarActividadController.filtroProyecto.codigoProyecto}"></p:inputText>
+							<p:outputLabel value="Nombre" />
+							<p:inputText
+								value="#{gestionarActividadController.filtroProyecto.nombreProyecto}"
+								style="width: 250px"></p:inputText>
+							<p:commandButton action="#{gestionarActividadController.listarProyecto}"
+								icon="ui-icon-search" value="Buscar" update="idTableAsistencia"></p:commandButton>
+						</h:panelGrid>
+						<br />
+						<p:dataTable id="idTableAsistencia" var="c" rows="15"
+							value="#{gestionarActividadController.listProyecto}" paginator="true"
+							paginatorPosition="bottom"
+							rowsPerPageTemplate="5,10,15,20,25,50,100,200,300,400,500,600,700,800,900,1000"
+							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
+						    {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							emptyMessage="#{messages.general_no_registros}" scrollable="true"
+							scrollHeight="350">
+							<p:column width="100" sortBy="#{c.codigoProyecto}">
+								<f:facet name="header">
+									<h:outputText value="COD PROY" />
+								</f:facet>
+								<h:outputText value="#{c.codigoProyecto}" />
+							</p:column>
+							<p:column width="300" sortBy="#{c.nombreProyecto}">
+								<f:facet name="header">
+									<h:outputText value="NOMBRE DEL PROYECTO" />
+								</f:facet>
+								<h:outputText value="#{c.nombreProyecto}" />
+							</p:column>
+							<p:column width="100" sortBy="#{c.idea.codigoIdea}">
+								<f:facet name="header">
+									<h:outputText value="COD IDEA" />
+								</f:facet>
+								<h:outputText value="#{c.idea.codigoIdea}" />
+							</p:column>
+							<p:column width="70" styleClass="center">
+								<f:facet name="header">
+									<h:outputText value="OPCION" />
+								</f:facet>
+								<p:commandButton
+									action="#{gestionarActividadController.seleccionarProyecto(c)}"
+									icon="ui-icon-check" global="false"
+									title="Seleccionar #{messages.negrita_open}#{c.codigoProyecto}#{messages.negrita_close}"
+									oncomplete="PF('widgetProyecto').hide();"
+									update=":dataForm:pnlRegistro"></p:commandButton>
+							</p:column>
+							<f:facet name="footer">
+								<h:outputText
+									value="En total se encontraron #{fn:length(gestionarActividadController.listProyecto)}  registros" />
+							</f:facet>
+						</p:dataTable>
+					</p:panel>
+				</h:form>
+			</p:outputPanel>
+		</p:dialog>
+		<!-- Fin dialogo seleccionar Proyecto -->
+
+		<!-- Dialog Seleccionar Idea -->
+		<p:dialog id="dialogIdea" header="Seleccionar Idea" appendTo="@(body)"
+			widgetVar="widgetIdea" modal="true" width="48%" resizable="false"
+			height="480" style="z-index: 2002 !important;" position="top">
+			<p:outputPanel>
+				<h:form id="formIdea">
+					<p:panel id="panelIdea">
+						<h:panelGrid columns="5" cellpadding="3">
+							<p:outputLabel value="Codigo" />
+							<p:inputText value="#{gestionarActividadController.filtroIdea.codigoIdea}"></p:inputText>
+							<p:outputLabel value="Descripción" />
+							<p:inputText value="#{gestionarActividadController.filtroIdea.descIdea}"
+								style="width: 250px"></p:inputText>
+							<p:commandButton action="#{gestionarActividadController.listarIdea}"
+								icon="ui-icon-search" value="Buscar" update="idTableIdea"></p:commandButton>
+						</h:panelGrid>
+						<br />
+						<p:dataTable id="idTableIdea" var="c" rows="15"
+							value="#{gestionarActividadController.listIdea}" paginator="true"
+							paginatorPosition="bottom"
+							rowsPerPageTemplate="5,10,15,20,25,50,100,200,300,400,500,600,700,800,900,1000"
+							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
+						    {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							emptyMessage="#{messages.general_no_registros}" scrollable="true"
+							scrollHeight="350">
+							<p:column width="100" sortBy="#{c.codigoIdea}">
+								<f:facet name="header">
+									<h:outputText value="COD IDEA" />
+								</f:facet>
+								<h:outputText value="#{c.codigoIdea}" />
+							</p:column>
+							<p:column width="300" sortBy="#{c.descIdea}">
+								<f:facet name="header">
+									<h:outputText value="DESCRIPCIÓN" />
+								</f:facet>
+								<h:outputText value="#{c.descIdea}" />
+							</p:column>
+							<p:column width="70" styleClass="center">
+								<f:facet name="header">
+									<h:outputText value="OPCION" />
+								</f:facet>
+								<p:commandButton
+									action="#{gestionarActividadController.seleccionarIdea(c)}"
+									icon="ui-icon-check" global="false"
+									title="Seleccionar #{messages.negrita_open}#{c.codigoIdea}#{messages.negrita_close}"
+									oncomplete="PF('widgetIdea').hide();"
+									update=":dataForm:pnlRegistro"></p:commandButton>
+							</p:column>
+							<f:facet name="footer">
+								<h:outputText
+									value="En total se encontraron #{fn:length(gestionarActividadController.listIdea)}  registros" />
+							</f:facet>
+						</p:dataTable>
+					</p:panel>
+				</h:form>
+			</p:outputPanel>
+		</p:dialog>
+		<!-- Fin dialogo seleccionar Idea -->
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,166 @@
+@charset "ISO-8859-1";
+
+body,td {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #4D4C4C;
+	word-wrap: break-word;
+}
+
+body {
+	margin-right: 4%;
+	margin-left: 4%;
+	background-color: #F7F7F7;
+	text-align: left;
+}
+
+.ui-layout-unit,.ui-layout-unit-content {
+	border: 0px !important;
+	padding: 0em;
+	background-color: #F7F7F7;
+}
+
+.ui-panelgrid .ui-panelgrid-cell {
+	border: 0px !important;
+}
+
+/*Transparencia del dialog de carga*/
+.statusModal {
+	background: none !important;
+	border: none !important;
+	-moz-border-radius: 0px !important;
+	-webkit-border-radius: 0px !important;
+	border-radius: 0px !important;
+	-moz-box-shadow: 0 0px 0px rgba(0, 0, 0, 0) !important;
+	-webkit-box-shadow: 0 0px 0px rgba(0, 0, 0, 0) !important;
+	box-shadow: 0 0px 0px rgba(0, 0, 0, 0) !important;
+}
+
+#dlgStatus_modal {
+	background-image: none !important;
+	background-color: #BDBDBD !important; /*#B2AAAA #3E3F40 #EFF3F6*/
+	filter: alpha(opacity = 80) !important; /* works in IE 7 */
+	opacity: 0.8 !important; /* works in Firefox */
+}
+
+.bold {
+	font-weight: bold;
+}
+
+.izquierda {
+	float: left
+}
+
+.derecha {
+	float: right;
+}
+
+.center {
+	text-align: center !important;
+}
+
+.left {
+	text-align: left !important;
+}
+
+.right {
+	text-align: right !important;
+}
+
+.ui-widget {
+	font-family: Arial, Helvetica, sans-serif;
+	/*Verdana, Arial, sans-serif;*/
+	font-size: 10px;
+	word-wrap: break-word;
+}
+
+.inputNumberSize170 input {
+	width: 170px !important;
+}
+
+/* Para el impar de la tabla */
+.ui-datatable-odd {
+	background: none repeat scroll 0 0 #F2F5F9;
+}
+
+.ui-datatable-odd:hover {
+	background: none repeat scroll 0 0 #B6DDE8;
+}
+
+.ui-datatable-even:hover {
+	background: none repeat scroll 0 0 #B6DDE8;
+}
+
+.ui-state-default,.ui-widget-content 
+.ui-state-default,.ui-widget-header 
+.ui-state-default {
+	/*background-color: white;*/
+	font-weight: bold !important;
+}
+
+.ui-widget-header.ui-inputfield,.ui-widget-content .ui-inputfield {
+	font-weight: bold !important;
+}
+
+.ui-growl {
+	position: fixed;
+	top: 40%;
+	left: 40%;
+}
+
+.ui-growl-message {
+	color: white !important;
+	font-weight: bold;
+}
+
+.toUpper {
+	text-transform: uppercase;
+}
+
+.textoAdvertencia {
+	color: #B40404;
+	font-weight: bold;
+	font-size: 9px;
+}
+
+.textLogin {
+	font-family: sans-serif; /*cursive*/
+	word-wrap: break-word;
+	letter-spacing: 2px;
+	font-weight: bold;
+	text-align: left;
+	color: #CFD2D4;
+	font-size: 30px !important;
+}
+
+.notificacion {
+	width: 12.5em;
+	z-index: 4;
+	box-shadow: 2px 2px 19px #e0e0e0;
+	-o-box-shadow: 2px 2px 19px #e0e0e0;
+	-webkit-box-shadow: 2px 2px 19px #e0e0e0;
+	-moz-box-shadow: 2px 2px 19px #e0e0e0;
+	opacity: 0.8;
+	filter: alpha(opacity = 80);
+	color: black !important;
+	font-weight: bold;
+	text-align: justify;
+}
+
+.ERROR {
+	width: 1.5em;
+	height: 1.5em;
+	background-color: #F5BCA9;
+}
+
+.EXITO {
+	background-color: #C2D69B;
+}
+
+.INFORMACION {
+	background-color: #FCBF64;
+}
+
+.NOTICIA {
+	background-color: #B6DDE8;
+}
