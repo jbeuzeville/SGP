@@ -1,0 +1,192 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>pe.com.hitss.sgp</groupId>
+  <artifactId>sgpCore</artifactId>
+  <version>1.0</version>
+  <name>sgpCore</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+	<spring.version>3.1.0.RELEASE</spring.version>
+	<!--<spring.data.jpa.version>1.7.1.RELEASE</spring.data.jpa.version>
+	<hibernate.version>4.1.9.Final</hibernate.version>
+	<hitss.core.version>1.0</hitss.core.version>
+	<hitss.library.version>1.0</hitss.library.version>-->
+  </properties>
+	
+  <dependencies>
+	<!-- LIBRERIA CORE -->
+	<!--<dependency>
+		<groupId>pe.com.hitss.core</groupId>
+		<artifactId>HitssCore</artifactId>
+		<version>${hitss.core.version}</version>
+		<type>jar</type>
+	</dependency>
+	<dependency>
+		<groupId>pe.com.hitss.library</groupId>
+		<artifactId>HitssUtil</artifactId>
+		<version>${hitss.library.version}</version>
+		<type>jar</type>
+	</dependency>-->
+		
+	<!-- SPRING -->
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-core</artifactId>
+		<version>${spring.version}</version>
+		<type>jar</type>
+		<scope>compile</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-context</artifactId>
+		<version>${spring.version}</version>
+		<type>jar</type>
+		<scope>compile</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-tx</artifactId>
+		<version>${spring.version}</version>
+		<type>jar</type>
+		<scope>compile</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-orm</artifactId>
+		<version>${spring.version}</version>
+		<type>jar</type>
+		<scope>compile</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-jdbc</artifactId>
+		<version>${spring.version}</version>
+		<type>jar</type>
+		<scope>compile</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-aop</artifactId>
+		<version>${spring.version}</version>
+		<type>jar</type>
+		<scope>compile</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-test</artifactId>
+		<version>${spring.version}</version>
+		<type>jar</type>
+		<scope>compile</scope>
+	</dependency>
+
+	<!-- ASPECTOS -->
+	<dependency>
+		<groupId>org.aspectj</groupId>
+		<artifactId>aspectjrt</artifactId>
+		<version>1.6.2</version>
+	</dependency>
+	<dependency>
+		<groupId>aspectj</groupId>
+		<artifactId>aspectjweaver</artifactId>
+		<version>1.5.4</version>
+	</dependency>
+
+	<!-- OTRAS -->
+	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>slf4j-api</artifactId>
+		<version>1.4.2</version>
+		<scope>compile</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>slf4j-log4j12</artifactId>
+		<version>1.4.2</version>
+		<scope>compile</scope>
+	</dependency>
+	<dependency>
+		<groupId>commons-beanutils</groupId>
+		<artifactId>commons-beanutils</artifactId>
+		<version>1.8.3</version>
+		<scope>compile</scope>
+	</dependency>
+
+	<!-- Configurando Spring data JPA -->
+	<!--<dependency>
+		<groupId>org.springframework.data</groupId>
+		<artifactId>spring-data-jpa</artifactId>
+		<version>${spring.data.jpa.version}</version>
+	</dependency>-->
+
+	<!-- JPA Implementation (Hibernate) -->
+	<!--<dependency>
+		<groupId>org.hibernate</groupId>
+		<artifactId>hibernate-core</artifactId>
+		<version>${hibernate.version}</version>
+	</dependency>
+
+	<dependency>
+		<groupId>org.hibernate</groupId>
+		<artifactId>hibernate-entitymanager</artifactId>
+		<version>${hibernate.version}</version>
+	    <type>jar</type>
+		<scope>compile</scope>
+	</dependency>-->
+	
+	<dependency>
+		<groupId>org.primefaces</groupId>
+		<artifactId>primefaces</artifactId>
+		<version>6.0</version>
+	</dependency>
+	
+	<!-- ORACLE -->
+	<dependency>
+  			<groupId>ojdbc6</groupId>
+  			<artifactId>ojdbc6</artifactId>
+  			<version>6.0</version>
+ 		</dependency>
+
+	<!-- JUNIT -->
+	<dependency>
+		<groupId>junit</groupId>
+		<artifactId>junit</artifactId>
+		<version>4.8.1</version>
+		<scope>test</scope>
+	</dependency>
+
+</dependencies>
+
+  <build>
+	<plugins>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-surefire-plugin</artifactId>
+			<version>2.6</version>
+		</plugin>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<version>2.3.2</version>
+			<configuration>
+				<source>1.7</source>
+				<target>1.7</target>
+
+			</configuration>
+		</plugin>
+
+		<plugin>
+			<groupId>org.codehaus.mojo</groupId>
+			<artifactId>cobertura-maven-plugin</artifactId>
+			<version>2.5.1</version>
+			<configuration>
+				<formats>
+					<format>xml</format>
+					<format>html</format>
+				</formats>
+			</configuration>
+		</plugin>
+	</plugins>
+  </build>
+</project>
